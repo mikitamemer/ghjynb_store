@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DOORS ITEM SHOP</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#111016;color:#f5f1ff;font-family:Arial,sans-serif}
+main{max-width:760px;margin:auto;padding:20px 14px}
+header{display:flex;align-items:center;gap:12px}
+.logo{background:#8060dc;padding:14px;border-radius:14px;font-size:26px}
+h1{font-size:19px}
+small,.desc{color:#aaa3b7}
+.hero{margin:22px 0;padding:23px;border-radius:20px;background:linear-gradient(130deg,#39274e,#1b1923)}
+.hero h2{font-size:28px;margin-top:8px}
+.notice{padding:12px;background:#302719;color:#ffe0a0;border-radius:12px;font-size:13px;margin-bottom:22px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.card{background:#201d29;border:1px solid #383143;border-radius:16px;padding:12px}
+.art{height:90px;display:grid;place-items:center;background:#30263e;border-radius:12px;font-size:45px}
+.tag{color:#b7ff72;font-size:10px;margin-top:12px}
+.card h3{margin:7px 0}
+.desc{font-size:12px;min-height:32px}
+.buy{background:#9675f5;color:white;border:0;border-radius:9px;padding:10px;font-weight:bold}
+.price{font-weight:bold;margin:12px 0}
+footer{text-align:center;color:#aaa3b7;font-size:12px;margin:24px 0}
+@media(min-width:550px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<main>
+<header>
+<div class="logo">🚪</div>
+<div><small>ROBLOX • DOORS</small><h1>DOORS ITEM SHOP</h1></div>
+</header>
+
+<section class="hero">
+<small>WELCOME, SEEKER</small>
+<h2>Подготовься к следующей двери.</h2>
+<p>Выбирай предметы для своих приключений!</p>
+</section>
+
+<div class="notice">
+Демо-магазин: оплата пока не подключена.
+Кнопки ниже не списывают звёзды.
+</div>
+
+<h2>⭐ Каталог предметов</h2>
+<section class="grid" id="catalog"></section>
+
+<footer>
+Фанатский магазин. Не связан официально с Roblox или DOORS.
+<br>Передача предметов согласуется с продавцом.
+</footer>
+</main>
+
+<script>
+const tg=window.Telegram?.WebApp;
+tg?.ready();
+tg?.expand();
+
+const products=[
+{name:"Crucifix",emoji:"✝️",desc:"Крест для защиты от сущностей.",price:50,tag:"RARE"},
+{name:"Skeleton Key",emoji:"🗝️",desc:"Ключ для особых дверей.",price:35,tag:"SPECIAL"},
+{name:"Vitamins",emoji:"💊",desc:"Помогают быстрее двигаться.",price:20,tag:"BOOST"},
+{name:"Lockpick",emoji:"🔑",desc:"Для запертых дверей и ящиков.",price:15,tag:"UTILITY"},
+{name:"Flashlight",emoji:"🔦",desc:"Свет в тёмных комнатах.",price:25,tag:"UTILITY"},
+{name:"Bandage",emoji:"🩹",desc:"Предмет для восстановления.",price:10,tag:"BASIC"}
+];
+
+document.getElementById("catalog").innerHTML=products.map((p,i)=>`
+<article class="card">
+<div class="art">${p.emoji}</div>
+<div class="tag">${p.tag}</div>
+<h3>${p.name}</h3>
+<p class="desc">${p.desc}</p>
+<div class="price">${p.price} ⭐</div>
+<button class="buy" onclick="buy(${i})">Выбрать</button>
+</article>`).join("");
+
+function buy(i){
+const p=products[i];
+const msg=`Ты выбрал ${p.name} за ${p.price} Stars. Оплата ещё не подключена.`;
+if(tg?.showAlert) tg.showAlert(msg);
+else alert(msg);
+}
+</script>
+</body>
+</html>

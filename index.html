@@ -2,90 +2,290 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>DOORS ITEM SHOP</title>
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
-<style>
-*{box-sizing:border-box}
-body{margin:0;background:#111016;color:#f5f1ff;font-family:Arial,sans-serif}
-main{max-width:760px;margin:auto;padding:20px 14px}
-header{display:flex;align-items:center;gap:12px}
-.logo{background:#8060dc;padding:14px;border-radius:14px;font-size:26px}
-h1{font-size:19px}
-small,.desc{color:#aaa3b7}
-.hero{margin:22px 0;padding:23px;border-radius:20px;background:linear-gradient(130deg,#39274e,#1b1923)}
-.hero h2{font-size:28px;margin-top:8px}
-.notice{padding:12px;background:#302719;color:#ffe0a0;border-radius:12px;font-size:13px;margin-bottom:22px}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.card{background:#201d29;border:1px solid #383143;border-radius:16px;padding:12px}
-.art{height:90px;display:grid;place-items:center;background:#30263e;border-radius:12px;font-size:45px}
-.tag{color:#b7ff72;font-size:10px;margin-top:12px}
-.card h3{margin:7px 0}
-.desc{font-size:12px;min-height:32px}
-.buy{background:#9675f5;color:white;border:0;border-radius:9px;padding:10px;font-weight:bold}
-.price{font-weight:bold;margin:12px 0}
-footer{text-align:center;color:#aaa3b7;font-size:12px;margin:24px 0}
-@media(min-width:550px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101016">
+  <title>DOORS Store</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: #101016;
+      color: #fff;
+      font-family: Arial, sans-serif;
+    }
+
+    header {
+      text-align: center;
+      padding: 28px 16px;
+      background: linear-gradient(135deg, #24113d, #11111a);
+      border-bottom: 1px solid #553477;
+    }
+
+    header h1 {
+      margin: 0 0 8px;
+      color: #d4a6ff;
+      font-size: 30px;
+    }
+
+    header p {
+      color: #c6bfd0;
+      margin: 0;
+    }
+
+    main {
+      max-width: 900px;
+      margin: auto;
+      padding: 18px;
+    }
+
+    .notice {
+      padding: 13px;
+      background: #211b2b;
+      border: 1px solid #51366d;
+      border-radius: 12px;
+      margin-bottom: 18px;
+      color: #e2d5f4;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    input {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #484052;
+      border-radius: 10px;
+      background: #1b1a23;
+      color: white;
+      font-size: 16px;
+      margin-bottom: 18px;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .product {
+      min-width: 0;
+      overflow: hidden;
+      background: #1b1a23;
+      border: 1px solid #35313f;
+      border-radius: 14px;
+      padding: 12px;
+    }
+
+    .product img {
+      width: 100%;
+      height: 145px;
+      object-fit: contain;
+      background: #13121a;
+      border-radius: 10px;
+    }
+
+    .product h2 {
+      font-size: 16px;
+      margin: 12px 0 7px;
+    }
+
+    .description {
+      min-height: 32px;
+      color: #aaa4b6;
+      font-size: 12px;
+    }
+
+    .price {
+      color: #d5a6ff;
+      font-size: 18px;
+      font-weight: bold;
+      margin: 12px 0;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px 8px;
+      background: #8c45d8;
+      border: 0;
+      border-radius: 9px;
+      color: white;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:active { opacity: .8; }
+
+    footer {
+      text-align: center;
+      padding: 24px 12px;
+      color: #8f899b;
+      font-size: 12px;
+    }
+
+    @media (max-width: 350px) {
+      .products { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
+
 <body>
-<main>
-<header>
-<div class="logo">🚪</div>
-<div><small>ROBLOX • DOORS</small><h1>DOORS ITEM SHOP</h1></div>
-</header>
+  <header>
+    <h1>DOORS STORE</h1>
+    <p>Магазин игровых предметов</p>
+  </header>
 
-<section class="hero">
-<small>WELCOME, SEEKER</small>
-<h2>Подготовься к следующей двери.</h2>
-<p>Выбирай предметы для своих приключений!</p>
-</section>
+  <main>
+    <div class="notice">
+      ⭐ Цены указаны в Telegram Stars.
+      Нажатие на кнопку создаёт запрос на заказ.
+      Оплата пока не подключена автоматически.
+    </div>
 
-<div class="notice">
-Демо-магазин: оплата пока не подключена.
-Кнопки ниже не списывают звёзды.
-</div>
+    <input
+      id="search"
+      type="search"
+      placeholder="🔎 Найти предмет..."
+      aria-label="Поиск предметов"
+    >
 
-<h2>⭐ Каталог предметов</h2>
-<section class="grid" id="catalog"></section>
+    <div class="products" id="products"></div>
+  </main>
 
-<footer>
-Фанатский магазин. Не связан официально с Roblox или DOORS.
-<br>Передача предметов согласуется с продавцом.
-</footer>
-</main>
+  <footer>
+    Фан-магазин. Неофициальный проект сообщества DOORS.
+  </footer>
 
-<script>
-const tg=window.Telegram?.WebApp;
-tg?.ready();
-tg?.expand();
+  <script>
+    // ВСТАВЬ СЮДА username своего Telegram-бота
+    // Без символа @. Например: my_store_bot
+    const BOT_USERNAME = "YOUR_BOT_USERNAME";
 
-const products=[
-{name:"Crucifix",emoji:"✝️",desc:"Крест для защиты от сущностей.",price:50,tag:"RARE"},
-{name:"Skeleton Key",emoji:"🗝️",desc:"Ключ для особых дверей.",price:35,tag:"SPECIAL"},
-{name:"Vitamins",emoji:"💊",desc:"Помогают быстрее двигаться.",price:20,tag:"BOOST"},
-{name:"Lockpick",emoji:"🔑",desc:"Для запертых дверей и ящиков.",price:15,tag:"UTILITY"},
-{name:"Flashlight",emoji:"🔦",desc:"Свет в тёмных комнатах.",price:25,tag:"UTILITY"},
-{name:"Bandage",emoji:"🩹",desc:"Предмет для восстановления.",price:10,tag:"BASIC"}
-];
+    const items = [
+      {
+        id: "skeleton_key",
+        name: "Skeleton Key",
+        price: 10,
+        description: "Скелетный ключ",
+        image:
+          "https://static.wikia.nocookie.net/doors-game/images/c/cd/Skeletonkeyimage.png/revision/latest?cb=20241022090900",
+        page: "https://doorswiki.com/wiki/skeleton-key/"
+      },
+      {
+        id: "gween_soda",
+        name: "Gween Soda",
+        price: 20,
+        description: "Зелёная газировка",
+        image:
+          "https://media.sketchfab.com/models/6435c50365a54522aa58157b5b0f6b94/thumbnails/9f8e678d36a446ec80956a56be1e0536/0adf578fd17246a6bbea1113d6af5edf.jpeg",
+        page: "https://doors-game.fandom.com/wiki/Gween_Soda"
+      },
+      {
+        id: "starlight_jug",
+        name: "Starlight Jug",
+        price: 15,
+        description: "Кувшин звёздного света",
+        image: "",
+        page: "https://doors-entities.fandom.com/wiki/Items"
+      },
+      {
+        id: "lotus_flower",
+        name: "Lotus Flower",
+        price: 25,
+        description: "Лотос",
+        image: "",
+        page: "https://doorswiki.com/wiki/lotus/"
+      },
+      {
+        id: "donut",
+        name: "Donut",
+        price: 10,
+        description: "Пончик",
+        image: "",
+        page: "https://doorswiki.com/wiki/donut/"
+      }
+    ];
 
-document.getElementById("catalog").innerHTML=products.map((p,i)=>`
-<article class="card">
-<div class="art">${p.emoji}</div>
-<div class="tag">${p.tag}</div>
-<h3>${p.name}</h3>
-<p class="desc">${p.desc}</p>
-<div class="price">${p.price} ⭐</div>
-<button class="buy" onclick="buy(${i})">Выбрать</button>
-</article>`).join("");
+    const products = document.getElementById("products");
+    const search = document.getElementById("search");
 
-function buy(i){
-const p=products[i];
-const msg=`Ты выбрал ${p.name} за ${p.price} Stars. Оплата ещё не подключена.`;
-if(tg?.showAlert) tg.showAlert(msg);
-else alert(msg);
-}
-</script>
+    function renderItems(filter = "") {
+      products.replaceChildren();
+
+      const filtered = items.filter(item =>
+        item.name.toLowerCase().includes(filter.toLowerCase())
+      );
+
+      filtered.forEach(item => {
+        const card = document.createElement("article");
+        card.className = "product";
+
+        const image = document.createElement("img");
+        image.alt = item.name;
+        image.loading = "lazy";
+
+        if (item.image) {
+          image.src = item.image;
+          image.onerror = () => {
+            image.onerror = null;
+            image.src = "";
+            image.alt = "Изображение недоступно";
+            image.style.objectFit = "contain";
+          };
+        } else {
+          image.alt = "Открой страницу предмета, чтобы посмотреть изображение";
+        }
+
+        const title = document.createElement("h2");
+        title.textContent = item.name;
+
+        const description = document.createElement("div");
+        description.className = "description";
+        description.textContent = item.description;
+
+        const price = document.createElement("div");
+        price.className = "price";
+        price.textContent = `⭐ ${item.price} Stars`;
+
+        const button = document.createElement("button");
+        button.textContent = "Заказать";
+
+        button.addEventListener("click", () => {
+          if (BOT_USERNAME === "YOUR_BOT_USERNAME") {
+            alert(
+              "Сначала укажи username своего Telegram-бота в коде."
+            );
+            return;
+          }
+
+          const message =
+            `Хочу заказать: ${item.name}. Цена: ${item.price} Stars.`;
+
+          const startPayload = `order_${item.id}`;
+
+          const url =
+            `https://t.me/${BOT_USERNAME}?start=${startPayload}`;
+
+          window.open(url, "_blank");
+        });
+
+        card.append(image, title, description, price, button);
+        products.appendChild(card);
+      });
+
+      if (filtered.length === 0) {
+        products.textContent = "Предметы не найдены.";
+      }
+    }
+
+    search.addEventListener("input", () => {
+      renderItems(search.value);
+    });
+
+    renderItems();
+  </script>
 </body>
-</html>
+      </html>
+      

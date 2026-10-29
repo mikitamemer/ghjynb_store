@@ -2,290 +2,555 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#101016">
-  <title>DOORS Store</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101014">
+<title>GHJYNB STORE</title>
 
-  <style>
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      background: #101016;
-      color: #fff;
-      font-family: Arial, sans-serif;
-    }
-
-    header {
-      text-align: center;
-      padding: 28px 16px;
-      background: linear-gradient(135deg, #24113d, #11111a);
-      border-bottom: 1px solid #553477;
-    }
-
-    header h1 {
-      margin: 0 0 8px;
-      color: #d4a6ff;
-      font-size: 30px;
-    }
-
-    header p {
-      color: #c6bfd0;
-      margin: 0;
-    }
-
-    main {
-      max-width: 900px;
-      margin: auto;
-      padding: 18px;
-    }
-
-    .notice {
-      padding: 13px;
-      background: #211b2b;
-      border: 1px solid #51366d;
-      border-radius: 12px;
-      margin-bottom: 18px;
-      color: #e2d5f4;
-      font-size: 14px;
-      line-height: 1.5;
-    }
-
-    input {
-      width: 100%;
-      padding: 13px;
-      border: 1px solid #484052;
-      border-radius: 10px;
-      background: #1b1a23;
-      color: white;
-      font-size: 16px;
-      margin-bottom: 18px;
-    }
-
-    .products {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-    }
-
-    .product {
-      min-width: 0;
-      overflow: hidden;
-      background: #1b1a23;
-      border: 1px solid #35313f;
-      border-radius: 14px;
-      padding: 12px;
-    }
-
-    .product img {
-      width: 100%;
-      height: 145px;
-      object-fit: contain;
-      background: #13121a;
-      border-radius: 10px;
-    }
-
-    .product h2 {
-      font-size: 16px;
-      margin: 12px 0 7px;
-    }
-
-    .description {
-      min-height: 32px;
-      color: #aaa4b6;
-      font-size: 12px;
-    }
-
-    .price {
-      color: #d5a6ff;
-      font-size: 18px;
-      font-weight: bold;
-      margin: 12px 0;
-    }
-
-    button {
-      width: 100%;
-      padding: 12px 8px;
-      background: #8c45d8;
-      border: 0;
-      border-radius: 9px;
-      color: white;
-      font-size: 14px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    button:active { opacity: .8; }
-
-    footer {
-      text-align: center;
-      padding: 24px 12px;
-      color: #8f899b;
-      font-size: 12px;
-    }
-
-    @media (max-width: 350px) {
-      .products { grid-template-columns: 1fr; }
-    }
-  </style>
+<style>
+:root {
+  --bg: #101014;
+  --panel: #1c1c24;
+  --panel2: #272733;
+  --text: #ffffff;
+  --muted: #aaaab8;
+  --accent: #8c63ff;
+  --accent2: #6d43e8;
+  --border: #353541;
+  --green: #63e6a0;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, sans-serif;
+}
+button, input { font: inherit; }
+button { cursor: pointer; }
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: #101014ee;
+  backdrop-filter: blur(12px);
+}
+.logo { font-size: 19px; font-weight: 900; }
+.logo span { color: var(--accent); }
+.cart-button, .secondary {
+  background: var(--panel2);
+  color: white;
+  border: 1px solid var(--border);
+  padding: 11px 14px;
+  border-radius: 12px;
+}
+main { max-width: 850px; margin: auto; padding: 20px; }
+.page { display: none; }
+.page.active { display: block; }
+.hero {
+  padding: 30px 22px;
+  border-radius: 22px;
+  background: linear-gradient(135deg,#392263,#171722 75%);
+  margin-bottom: 24px;
+}
+.hero h1 { font-size: 32px; margin: 0 0 12px; }
+.hero p { color: #ded5ff; line-height: 1.5; }
+.eyebrow {
+  color: #c3b2ff;
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+h2 { font-size: 23px; }
+.muted { color: var(--muted); line-height: 1.5; }
+.games, .products {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 14px;
+}
+.game, .product, .cart-item {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 17px;
+  overflow: hidden;
+}
+.game {
+  padding: 20px;
+  min-height: 155px;
+  text-align: left;
+  color: white;
+  transition: .2s;
+}
+.game:hover, .product:hover { border-color: var(--accent); }
+.game-art {
+  height: 85px;
+  display: grid;
+  place-items: center;
+  font-size: 48px;
+  background: linear-gradient(135deg,#31214d,#191921);
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
+.game strong { display: block; font-size: 17px; }
+.game small { display: block; color: var(--muted); margin-top: 7px; }
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 20px 0;
+}
+.product { padding: 12px; }
+.product-art {
+  height: 125px;
+  border-radius: 12px;
+  background: linear-gradient(135deg,#33294c,#20202b);
+  display: grid;
+  place-items: center;
+  font-size: 49px;
+  margin-bottom: 12px;
+}
+.product h3 { font-size: 16px; margin: 5px 0; }
+.product p { font-size: 13px; color: var(--muted); min-height: 32px; }
+.price { font-weight: bold; margin: 12px 0; }
+.primary {
+  width: 100%;
+  border: 0;
+  color: white;
+  background: var(--accent);
+  padding: 12px;
+  border-radius: 11px;
+  font-weight: bold;
+}
+.primary:hover { background: var(--accent2); }
+.primary:disabled { opacity: .45; cursor: not-allowed; }
+.back {
+  border: 0;
+  background: transparent;
+  color: #c6b4ff;
+  padding: 8px 0;
+}
+.cart-list { display: grid; gap: 12px; margin: 20px 0; }
+.cart-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px;
+}
+.cart-emoji { font-size: 30px; }
+.cart-info { flex: 1; min-width: 0; }
+.cart-info strong { display: block; }
+.cart-info small { color: var(--muted); }
+.quantity { display: flex; align-items: center; gap: 8px; }
+.quantity button {
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  border: 1px solid var(--border);
+  color: white;
+  background: var(--panel2);
+}
+.remove {
+  border: 0;
+  background: transparent;
+  color: #ff8585;
+  padding: 6px;
+}
+.summary {
+  padding: 18px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  margin: 18px 0;
+}
+.total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 19px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+.notice {
+  background: #252139;
+  border: 1px solid #49377b;
+  padding: 13px;
+  border-radius: 12px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #e0d6ff;
+  margin: 15px 0;
+}
+.empty {
+  text-align: center;
+  padding: 35px 15px;
+  background: var(--panel);
+  border-radius: 16px;
+  color: var(--muted);
+}
+footer {
+  text-align: center;
+  color: var(--muted);
+  padding: 30px 15px;
+  font-size: 12px;
+}
+@media(max-width:420px) {
+  main { padding: 14px; }
+  .hero h1 { font-size: 27px; }
+  .games, .products { gap: 10px; }
+  .product { padding: 9px; }
+  .product-art { height: 100px; }
+  .cart-item { flex-wrap: wrap; }
+}
+</style>
 </head>
 
 <body>
-  <header>
-    <h1>DOORS STORE</h1>
-    <p>Магазин игровых предметов</p>
-  </header>
+<header>
+  <div class="logo">GHJYNB <span>STORE</span></div>
+  <button class="cart-button" onclick="showCart()">
+    🛒 Корзина <span id="cartCount">0</span>
+  </button>
+</header>
 
-  <main>
-    <div class="notice">
-      ⭐ Цены указаны в Telegram Stars.
-      Нажатие на кнопку создаёт запрос на заказ.
-      Оплата пока не подключена автоматически.
+<main>
+  <!-- Главная страница -->
+  <section id="home" class="page active">
+    <div class="hero">
+      <div class="eyebrow">DIGITAL GAME STORE</div>
+      <h1>Твой игровой магазин</h1>
+      <p>Выбирай игру, добавляй товары в корзину и оформляй заказ.</p>
     </div>
 
-    <input
-      id="search"
-      type="search"
-      placeholder="🔎 Найти предмет..."
-      aria-label="Поиск предметов"
-    >
+    <h2>Выбери игру</h2>
+    <p class="muted">Другие игры появятся позже.</p>
 
-    <div class="products" id="products"></div>
-  </main>
+    <div class="games">
+      <button class="game" onclick="showDoors()">
+        <div class="game-art">🚪</div>
+        <strong>DOORS</strong>
+        <small>Предметы Roblox</small>
+      </button>
+    </div>
+  </section>
 
-  <footer>
-    Фан-магазин. Неофициальный проект сообщества DOORS.
-  </footer>
+  <!-- Каталог -->
+  <section id="doors" class="page">
+    <button class="back" onclick="showPage('home')">
+      ← Все игры
+    </button>
+    <div class="hero">
+      <div class="eyebrow">ROBLOX</div>
+      <h1>DOORS</h1>
+      <p>Выбирай предметы и добавляй их в корзину.</p>
+    </div>
 
-  <script>
-    // ВСТАВЬ СЮДА username своего Telegram-бота
-    // Без символа @. Например: my_store_bot
-    const BOT_USERNAME = "ghjynbot";
+    <div class="toolbar">
+      <h2>Каталог</h2>
+      <button class="secondary" onclick="showCart()">🛒 Корзина</button>
+    </div>
+    <div id="products" class="products"></div>
+  </section>
 
-    const items = [
-      {
-        id: "skeleton_key",
-        name: "Skeleton Key",
-        price: 10,
-        description: "Скелетный ключ",
-        image:
-          "https://static.wikia.nocookie.net/doors-game/images/c/cd/Skeletonkeyimage.png/revision/latest?cb=20241022090900",
-        page: "https://doorswiki.com/wiki/skeleton-key/"
-      },
-      {
-        id: "gween_soda",
-        name: "Gween Soda",
-        price: 20,
-        description: "Зелёная газировка",
-        image:
-          "https://media.sketchfab.com/models/6435c50365a54522aa58157b5b0f6b94/thumbnails/9f8e678d36a446ec80956a56be1e0536/0adf578fd17246a6bbea1113d6af5edf.jpeg",
-        page: "https://doors-game.fandom.com/wiki/Gween_Soda"
-      },
-      {
-        id: "starlight_jug",
-        name: "Starlight Jug",
-        price: 15,
-        description: "Кувшин звёздного света",
-        image: "",
-        page: "https://doors-entities.fandom.com/wiki/Items"
-      },
-      {
-        id: "lotus_flower",
-        name: "Lotus Flower",
-        price: 25,
-        description: "Лотос",
-        image: "",
-        page: "https://doorswiki.com/wiki/lotus/"
-      },
-      {
-        id: "donut",
-        name: "Donut",
-        price: 10,
-        description: "Пончик",
-        image: "",
-        page: "https://doorswiki.com/wiki/donut/"
-      }
-    ];
+  <!-- Корзина -->
+  <section id="cart" class="page">
+    <button class="back" onclick="showDoors()">← Назад в каталог</button>
+    <h1>Твоя корзина</h1>
+    <p class="muted">Проверь товары перед оформлением.</p>
 
-    const products = document.getElementById("products");
-    const search = document.getElementById("search");
+    <div id="cartList" class="cart-list"></div>
+    <div id="cartSummary"></div>
 
-    function renderItems(filter = "") {
-      products.replaceChildren();
+    <button class="primary" id="checkout"
+      onclick="checkout()">
+      Подтвердить заказ
+    </button>
 
-      const filtered = items.filter(item =>
-        item.name.toLowerCase().includes(filter.toLowerCase())
-      );
+    <p class="muted" style="font-size:12px">
+      Кнопка оформления откроет Telegram с подготовленным сообщением.
+      Для оплаты Stars потребуется настроить бота отдельно.
+    </p>
+  </section>
 
-      filtered.forEach(item => {
-        const card = document.createElement("article");
-        card.className = "product";
+  <!-- Информация -->
+  <section id="info" class="page">
+    <button class="back" onclick="showDoors()">← Назад</button>
+    <h1>Как оформить заказ</h1>
+    <p class="muted">
+      1. Выбери товары в каталоге.<br>
+      2. Добавь их в корзину.<br>
+      3. Проверь общую сумму.<br>
+      4. Подтверди заказ в Telegram.<br>
+      5. Дождись подтверждения продавца.
+    </p>
+  </section>
+</main>
 
-        const image = document.createElement("img");
-        image.alt = item.name;
-        image.loading = "lazy";
+<footer>
+  GHJYNB STORE · Неофициальный магазин игровых товаров
+</footer>
 
-        if (item.image) {
-          image.src = item.image;
-          image.onerror = () => {
-            image.onerror = null;
-            image.src = "";
-            image.alt = "Изображение недоступно";
-            image.style.objectFit = "contain";
-          };
-        } else {
-          image.alt = "Открой страницу предмета, чтобы посмотреть изображение";
-        }
+<script>
+"use strict";
 
-        const title = document.createElement("h2");
-        title.textContent = item.name;
+// Имя Telegram-бота без символа @
+const BOT_USERNAME = "ghjynbot";
 
-        const description = document.createElement("div");
-        description.className = "description";
-        description.textContent = item.description;
+// Каталог товаров.
+// Цены здесь отображаются в Stars, но сами по себе
+// не списывают звёзды с покупателя.
+const products = [
+  {
+    id: "skeleton-key",
+    name: "Скелетный ключ",
+    price: 10,
+    emoji: "🗝️",
+    description: "Предмет для DOORS"
+  },
+  {
+    id: "gween-soda",
+    name: "Гвин-сода",
+    price: 10,
+    emoji: "🥤",
+    description: "Предмет для DOORS"
+  },
+  {
+    id: "starlight-jug",
+    name: "Бочка звёздного пива",
+    price: 10,
+    emoji: "🛢️",
+    description: "Проверь наличие перед покупкой"
+  },
+  {
+    id: "lotus-flower",
+    name: "Цветок лотоса",
+    price: 10,
+    emoji: "🌸",
+    description: "Предмет для DOORS"
+  },
+  {
+    id: "donut",
+    name: "Пончик",
+    price: 10,
+    emoji: "🍩",
+    description: "Предмет для DOORS"
+  }
+];
 
-        const price = document.createElement("div");
-        price.className = "price";
-        price.textContent = `⭐ ${item.price} Stars`;
+// Корзина хранится в памяти страницы.
+const cart = {};
 
-        const button = document.createElement("button");
-        button.textContent = "Заказать";
+function showPage(pageId) {
+  document.querySelectorAll(".page").forEach(page => {
+    page.classList.remove("active");
+  });
 
-        button.addEventListener("click", () => {
-          if (BOT_USERNAME === "YOUR_BOT_USERNAME") {
-            alert(
-              "Сначала укажи username своего Telegram-бота в коде."
-            );
-            return;
-          }
+  const target = document.getElementById(pageId);
+  if (target) target.classList.add("active");
 
-          const message =
-            `Хочу заказать: ${item.name}. Цена: ${item.price} Stars.`;
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
 
-          const startPayload = `order_${item.id}`;
+function showDoors() {
+  renderProducts();
+  showPage("doors");
+}
 
-          const url =
-            `https://t.me/${BOT_USERNAME}?start=${startPayload}`;
+function showCart() {
+  renderCart();
+  showPage("cart");
+}
 
-          window.open(url, "_blank");
-        });
+function productById(id) {
+  return products.find(product => product.id === id);
+}
 
-        card.append(image, title, description, price, button);
-        products.appendChild(card);
-      });
+function addToCart(id) {
+  if (!productById(id)) return;
 
-      if (filtered.length === 0) {
-        products.textContent = "Предметы не найдены.";
-      }
-    }
+  cart[id] = (cart[id] || 0) + 1;
+  updateCartCount();
+  renderCart();
 
-    search.addEventListener("input", () => {
-      renderItems(search.value);
-    });
+  const product = productById(id);
+  alert("Добавлено в корзину: " + product.name);
+}
 
-    renderItems();
-  </script>
+function changeQuantity(id, change) {
+  if (!cart[id]) return;
+
+  cart[id] += change;
+
+  if (cart[id] <= 0) {
+    delete cart[id];
+  }
+
+  updateCartCount();
+  renderCart();
+}
+
+function removeFromCart(id) {
+  delete cart[id];
+  updateCartCount();
+  renderCart();
+}
+
+function getCartCount() {
+  return Object.values(cart).reduce((sum, quantity) => {
+    return sum + quantity;
+  }, 0);
+}
+
+function getTotal() {
+  return Object.entries(cart).reduce((sum, entry) => {
+    const [id, quantity] = entry;
+    const product = productById(id);
+    return sum + (product ? product.price * quantity : 0);
+  }, 0);
+}
+
+function updateCartCount() {
+  document.getElementById("cartCount").textContent =
+    getCartCount();
+}
+
+function renderProducts() {
+  const container = document.getElementById("products");
+
+  container.innerHTML = products.map(product => `
+    <article class="product">
+      <div class="product-art">${product.emoji}</div>
+      <h3>${escapeHTML(product.name)}</h3>
+      <p>${escapeHTML(product.description)}</p>
+      <div class="price">${product.price} ⭐</div>
+      <button class="primary"
+        onclick="addToCart('${product.id}')">
+        Заказать
+      </button>
+    </article>
+  `).join("");
+}
+
+function renderCart() {
+  const container = document.getElementById("cartList");
+  const summary = document.getElementById("cartSummary");
+  const checkoutButton = document.getElementById("checkout");
+
+  const entries = Object.entries(cart).filter(([id, quantity]) => {
+    return productById(id) && quantity > 0;
+  });
+
+  if (entries.length === 0) {
+    container.innerHTML = `
+      <div class="empty">
+        <div style="font-size:40px">🛒</div>
+        <h3>Корзина пуста</h3>
+        <p>Выбери что-нибудь в каталоге DOORS.</p>
+        <button class="primary" onclick="showDoors()">
+          Открыть каталог
+        </button>
+      </div>
+    `;
+
+    summary.innerHTML = "";
+    checkoutButton.disabled = true;
+    return;
+  }
+
+  checkoutButton.disabled = false;
+
+  container.innerHTML = entries.map(([id, quantity]) => {
+    const product = productById(id);
+
+    return `
+      <article class="cart-item">
+        <div class="cart-emoji">${product.emoji}</div>
+        <div class="cart-info">
+          <strong>${escapeHTML(product.name)}</strong>
+          <small>${product.price} ⭐ за штуку</small>
+          <div class="price">${product.price * quantity} ⭐</div>
+        </div>
+        <div class="quantity">
+          <button onclick="changeQuantity('${id}',-1)">−</button>
+          <span>${quantity}</span>
+          <button onclick="changeQuantity('${id}',1)">+</button>
+        </div>
+        <button class="remove"
+          onclick="removeFromCart('${id}')">
+          Удалить
+        </button>
+      </article>
+    `;
+  }).join("");
+
+  summary.innerHTML = `
+    <div class="summary">
+      <div class="total">
+        <span>Итого</span>
+        <span>${getTotal()} ⭐</span>
+      </div>
+      <div class="notice">
+        Это расчёт стоимости. Оплата ещё не произведена.
+      </div>
+    </div>
+  `;
+}
+
+// Экранируем текст на случай будущего добавления новых товаров.
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[char]);
+}
+
+function checkout() {
+  const entries = Object.entries(cart).filter(([id, quantity]) => {
+    return productById(id) && quantity > 0;
+  });
+
+  if (entries.length === 0) {
+    alert("Сначала добавь товары в корзину.");
+    return;
+  }
+
+  const lines = entries.map(([id, quantity]) => {
+    const product = productById(id);
+    return `${product.name} x${quantity} — ${product.price * quantity} Stars`;
+  });
+
+  const orderText = [
+    "Здравствуйте! Хочу оформить заказ:",
+    "",
+    ...lines,
+    "",
+    `Итого: ${getTotal()} Stars`,
+    "",
+    "Пожалуйста, подтвердите наличие и способ оплаты."
+  ].join("\n");
+
+  // Открываем бота с заранее заполненным сообщением.
+  // Покупателю нужно самостоятельно нажать «Отправить».
+  const telegramURL =
+    "https://t.me/" + BOT_USERNAME +
+    "?text=" + encodeURIComponent(orderText);
+
+  window.open(telegramURL, "_blank");
+}
+
+// Запускаем магазин.
+renderProducts();
+updateCartCount();
+renderCart();
+</script>
 </body>
-      </html>
-      
+  </html>
+  
